@@ -1,4 +1,7 @@
 /.venv
 src/*
 static/*
+build/*
+dist/*
 /.idea
+*.egg-info
