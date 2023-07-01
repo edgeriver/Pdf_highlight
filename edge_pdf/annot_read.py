@@ -123,7 +123,7 @@ def read_annot():
     args = parser.parse_args()
     p_pdf_path = args.pdf
     p_save_path = args.out
-    hello_setuptools(args.name)
+
     processor = PDFProcessor(p_pdf_path)
     origin_data = processor.return_df
     tree = DataFrameDirectoryTree(origin_data, "content")
