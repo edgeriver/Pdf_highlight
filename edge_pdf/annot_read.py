@@ -5,9 +5,9 @@ import datetime
 
 class PDFProcessor:
 
-    def __init__(self, pdf_path):
+    def __init__(self, cls_pdf_path):
         self.doc = None
-        self.pdf_path = pdf_path
+        self.pdf_path = cls_pdf_path
         self.sheet_col = ["Page", "content", "id", "parent_id", "creationDate", "modDate", "subject", "title",
                           "vertices"]
         self.df = pd.DataFrame(columns=self.sheet_col)
@@ -115,9 +115,8 @@ class DataFrameTransformer:
         return self.df_A
 
 
-# 创建PDFProcessor对象
-if __name__ == "__main__":
-    processor = PDFProcessor(r"../src/modified_pdf_file.pdf")
+def read_annot(p_pdf_path, p_save_path):
+    processor = PDFProcessor(p_pdf_path)
     origin_data = processor.return_df
     tree = DataFrameDirectoryTree(origin_data, "content")
     origin_data["reply"] = origin_data["id"].apply(tree.get_parent_name)
@@ -130,4 +129,11 @@ if __name__ == "__main__":
     df_c = df_b.reset_index().copy()
     # df_c.rename(columns={'index': '原始索引'}, inplace=True)
     df_c.drop(["index"], axis=1, inplace=True)
-    df_c.to_excel('../src/data.xlsx', "目录")
+    df_c.to_excel(p_save_path, "目录")
+
+
+# 创建PDFProcessor对象
+if __name__ == "__main__":
+    pdf_path = r"../src/modified_pdf_file.pdf"
+    save_path = '../src/data.xlsx'
+    read_annot(pdf_path, save_path)

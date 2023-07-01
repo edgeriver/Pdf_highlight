@@ -1,5 +1,4 @@
-\.venv
-\src\data.xlsx
-\static\*
-\.idea
-packages.txt
+/.venv
+src/*
+static/*
+/.idea
