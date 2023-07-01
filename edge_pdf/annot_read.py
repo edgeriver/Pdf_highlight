@@ -1,6 +1,7 @@
 import fitz
 import pandas as pd
 import datetime
+import argparse
 
 
 class PDFProcessor:
@@ -115,7 +116,14 @@ class DataFrameTransformer:
         return self.df_A
 
 
-def read_annot(p_pdf_path, p_save_path):
+def read_annot():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--pdf', help='请指定输入pdf文件路径')
+    parser.add_argument('--out', help='请指定输出pdf文件路径')
+    args = parser.parse_args()
+    p_pdf_path = args.pdf
+    p_save_path = args.out
+    hello_setuptools(args.name)
     processor = PDFProcessor(p_pdf_path)
     origin_data = processor.return_df
     tree = DataFrameDirectoryTree(origin_data, "content")
@@ -134,6 +142,4 @@ def read_annot(p_pdf_path, p_save_path):
 
 # 创建PDFProcessor对象
 if __name__ == "__main__":
-    pdf_path = r"../src/modified_pdf_file.pdf"
-    save_path = '../src/data.xlsx'
-    read_annot(pdf_path, save_path)
+    read_annot()
