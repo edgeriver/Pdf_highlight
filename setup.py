@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(
-    name='Pdf_highlight',
+    name='edge_pdf',
     version='1.0.0',
     packages=['edge_pdf'],
     url='',
