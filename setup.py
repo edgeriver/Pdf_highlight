@@ -14,7 +14,7 @@ setup(
     # extras_require={"annot_read": ["PyMuPDF==1.22.5"], },
     entry_points={
         'console_scripts': [
-            'readpdf = edge_pdf.annot_read:read_annot'
+            'readpdf = edge_pdf.annot_read:main'
         ]
     },
 )

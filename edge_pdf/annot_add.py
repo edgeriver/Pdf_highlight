@@ -1,4 +1,5 @@
 import fitz
+import argparse
 
 
 class PDFEditor:
@@ -28,11 +29,19 @@ class PDFEditor:
         self.pdf.close()
 
 
-if __name__ == '__main__':
+def main(file_path=None, output_path=None, search_text=None):
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--file', default="../src/modified_pdf_file.pdf", help='请指定输入pdf文件路径')
+    parser.add_argument('--out', default="../src/data.xlsx", help='请指定输出pdf文件路径')
+    parser.add_argument('--search', default="员工", help='搜索的关键词')
+    args = parser.parse_args()
 
-    file_path = '../src/d28c83cb2ca5bd0e9bf4ece29f52bdff(1).pdf'
-    output_path = '../src/modified_pdf_file.pdf'
-    search_text = '员工'
+    if file_path is None:
+        file_path = args.file
+    if output_path is None:
+        output_path = args.out
+    if search_text is None:
+        search_text = args.search
 
     pdf_editor = PDFEditor(file_path)
     pdf_editor.search_and_highlight(search_text)
@@ -46,3 +55,7 @@ if __name__ == '__main__':
             pdf_editor.add_text_annotation(page_number, rect, content_text)
 
     pdf_editor.save(output_path)
+
+
+if __name__ == '__main__':
+    main()
