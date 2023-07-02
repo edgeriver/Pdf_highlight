@@ -5,7 +5,7 @@ PDFMiner is a text extraction tool for PDF documents.
 ## 安装命令
 ssh安装
 
-    pip install git+ssh://git@github.com/edgeriver/Pdf_highlight.git@dev
+    pip install git+ssh://git@github.com/edgeriver/Pdf_highlight.git
 
 https安装
 
