@@ -2,9 +2,15 @@ from edge_pdf import annot_export
 
 if __name__ == '__main__':
     # 获取注释文件
+
+    def get_buffer_object(file_path):
+        buffer = open(file_path, "rb")
+        return buffer
+
+    file_contents = get_buffer_object("src/data.pdf")
     p_pdf_path = "src/data.pdf"
     p_save_path = "src/data2.xlsx"
-    annot_export(p_pdf_path, p_save_path)
+    annot_export(file_contents, p_save_path)
 
     # file_path = './src/sample.pdf'
     # output_path = './src/need_annot.pdf'

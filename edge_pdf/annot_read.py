@@ -4,14 +4,16 @@ import datetime
 import argparse
 from .annot_logger import Logger
 import sys
+from typing import Union,IO
+import io
 
 logger = Logger()
 
 
 class PDFProcessor:
-    def __init__(self, cls_pdf_path):
+    def __init__(self, cls_pdf_path: Union[str, IO[bytes]]):
         self.doc = None
-        self.pdf_path = cls_pdf_path
+        self.file = cls_pdf_path
         self.sheet_col = ["Page", "content", "id", "parent_id", "creationDate", "modDate", "subject", "title",
                           "vertices"]
         self.df = pd.DataFrame(columns=self.sheet_col)
@@ -31,7 +33,12 @@ class PDFProcessor:
         return timestamp_obj
 
     def process_pdf(self):
-        self.doc = fitz.open(self.pdf_path)
+        if isinstance(self.file, str):
+            self.doc = fitz.open(self.file)
+        elif isinstance(self.file, (io.IOBase, io.BufferedIOBase)):
+            self.doc = fitz.open(stream=self.file.read(), filetype="pdf")
+        else:
+            raise ValueError("pdf_path must be either a file path (str) or a buffer object")
         for page_num, page in enumerate(self.doc, start=1):
             annotations = page.annots()
             if annotations:
