@@ -4,7 +4,7 @@ setup(
     name='edge_pdf',
     version='1.0.0',
     packages=['edge_pdf'],
-    url='',
+    url='https://github.com/edgeriver/Pdf_highlight.git',
     license='BSD (3-clause)',
     author='wangwl',
     author_email='643176574@qq.com',
