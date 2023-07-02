@@ -13,4 +13,14 @@ https安装
 
 
 ## 命令行语法
-    readpdf --pdf=file.pdf --out=data.xlsx
+    annot_export --pdf=file.pdf --out=data.xlsx
+
+## 包的使用方法
+    # 导出注释的用户
+    from edge_pdf import annot_export
+    
+    if __name__ == '__main__':
+        # 获取注释文件
+        p_pdf_path = "src/need_annot.pdf"
+        p_save_path = "src/data2.xlsx"
+        annot_export(p_pdf_path,p_save_path)

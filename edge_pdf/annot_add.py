@@ -31,17 +31,14 @@ class PDFEditor:
 
 def main(file_path=None, output_path=None, search_text=None):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--file', default="../src/modified_pdf_file.pdf", help='请指定输入pdf文件路径')
+    parser.add_argument('--file', default="../src/sample.pdf", help='请指定输入pdf文件路径')
     parser.add_argument('--out', default="../src/data.pdf", help='请指定输出pdf文件路径')
     parser.add_argument('--search', default="员工", help='搜索的关键词')
     args = parser.parse_args()
 
-    if file_path is None:
-        file_path = args.file
-    if output_path is None:
-        output_path = args.out
-    if search_text is None:
-        search_text = args.search
+    file_path = file_path or args.file
+    output_path = output_path or args.out
+    search_text = search_text or args.search
 
     pdf_editor = PDFEditor(file_path)
     pdf_editor.search_and_highlight(search_text)

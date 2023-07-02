@@ -2,10 +2,13 @@ import fitz
 import pandas as pd
 import datetime
 import argparse
+from .annot_logger import Logger
+import sys
+
+logger = Logger()
 
 
 class PDFProcessor:
-
     def __init__(self, cls_pdf_path):
         self.doc = None
         self.pdf_path = cls_pdf_path
@@ -33,13 +36,11 @@ class PDFProcessor:
             annotations = page.annots()
             if annotations:
                 for annot in annotations:
-
                     if annot.info['subject'] != "":
                         page_info = [int(page_num), annot.info["content"], int(annot.xref), int(annot.irt_xref),
                                      self.parse_datetime(annot.info["creationDate"]),
                                      self.parse_datetime(annot.info['modDate']),
                                      annot.info['subject'], annot.info['title'], annot.vertices]
-                        # page_info = [page_num, annot.info["content"], annot.popup_xref,annot.irt_xref, annot.xref]
                         newpdf = pd.DataFrame([page_info], columns=self.df.columns)
                         self.df = pd.concat([self.df, newpdf], ignore_index=True)
         self.doc.close()
@@ -52,18 +53,10 @@ class PDFProcessor:
 
 
 class DataFrameDirectoryTree:
-
     def __init__(self, cls_data, cls_name=None, cls_id=None, cls_parent_id=None):
-        # self.get_sub_id = None
-        self.name = cls_name
-        self.id = cls_id
-        self.parent_id = cls_parent_id
-        if cls_name is None:
-            self.name = 'name'
-        if cls_id is None:
-            self.id = 'id'
-        if cls_parent_id is None:
-            self.parent_id = 'parent_id'
+        self.name = cls_name or 'name'
+        self.id = cls_id or 'id'
+        self.parent_id = cls_parent_id or 'parent_id'
         self.df = pd.DataFrame(cls_data)
 
     def get_subdirectories(self, parent_id):
@@ -100,11 +93,8 @@ class DataFrameDirectoryTree:
 
 
 class DataFrameTransformer:
-
     def __init__(self, cls_data, cls_name=None):
-        self.name = cls_name
-        if cls_name is None:
-            self.name = 'path_name'
+        self.name = cls_name or 'path_name'
         self.data = cls_data
         self.df_A = pd.DataFrame(self.data)
 
@@ -118,21 +108,20 @@ class DataFrameTransformer:
         return self.df_A
 
 
-def main(p_pdf_path=None, p_save_path=None):
+def annot_export(p_pdf_path=None, p_save_path=None):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--pdf', default="../src/modified_pdf_file.pdf", help='请指定输入pdf文件路径')
+    parser.add_argument('--pdf', default="../src/need_annot.pdf", help='请指定输入pdf文件路径')
     parser.add_argument('--out', default="../src/data.xlsx", help='请指定输出xlsx文件')
     args = parser.parse_args()
-    if p_pdf_path is None:
-        p_pdf_path = args.pdf
-    if p_save_path is None:
-        p_save_path = args.out
+    p_pdf_path = p_pdf_path or args.pdf
+    p_save_path = p_save_path or args.out
     # 使用PDFProcessor处理PDF文件并获取原始数据
     processor = PDFProcessor(p_pdf_path)
     origin_data = processor.return_df
 
     # 如果原始数据为空，则退出程序
     if origin_data.empty:
+        logger.warning("注释内容获取为空")
         sys.exit(0)
 
     # 创建DataFrameDirectoryTree对象，并根据指定列构建目录树
@@ -153,11 +142,13 @@ def main(p_pdf_path=None, p_save_path=None):
     # 复制df_b并删除"index"列
     df_c = df_b.reset_index().copy()
     df_c.drop(["index"], axis=1, inplace=True)
-
     # 将df_c保存为Excel文件
     df_c.to_excel(p_save_path, "目录")
 
 
 # 创建PDFProcessor对象
 if __name__ == "__main__":
-    main()
+    pdf_path = "../src/need_annot.pdf"
+    save_path = "../src/data2.xlsx"
+    logger.info("程序开始")
+    annot_export(pdf_path, save_path)
