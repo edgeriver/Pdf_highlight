@@ -5,7 +5,7 @@ import sys
 if __name__ == '__main__':
     # 设置PDF文件路径和保存路径
     p_pdf_path = "./src/modified_pdf_file.pdf"
-    p_save_path = "./src/data.xlsx"
+    p_save_path = "./src/data.pdf"
 
     # 使用PDFProcessor处理PDF文件并获取原始数据
     processor = PDFProcessor(p_pdf_path)
