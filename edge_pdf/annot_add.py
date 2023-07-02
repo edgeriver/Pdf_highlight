@@ -32,7 +32,7 @@ class PDFEditor:
 def main(file_path=None, output_path=None, search_text=None):
     parser = argparse.ArgumentParser()
     parser.add_argument('--file', default="../src/modified_pdf_file.pdf", help='请指定输入pdf文件路径')
-    parser.add_argument('--out', default="../src/data.xlsx", help='请指定输出pdf文件路径')
+    parser.add_argument('--out', default="../src/data.pdf", help='请指定输出pdf文件路径')
     parser.add_argument('--search', default="员工", help='搜索的关键词')
     args = parser.parse_args()
 
