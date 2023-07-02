@@ -108,7 +108,7 @@ class DataFrameTransformer:
         return self.df_A
 
 
-def annot_export(p_pdf_path=None, p_save_path=None):
+def annot_export(p_pdf_path=None, p_save_path=None, p_outfile: bool = True):
     parser = argparse.ArgumentParser()
     parser.add_argument('--pdf', default="../src/need_annot.pdf", help='请指定输入pdf文件路径')
     parser.add_argument('--out', default="../src/data.xlsx", help='请指定输出xlsx文件')
@@ -143,7 +143,9 @@ def annot_export(p_pdf_path=None, p_save_path=None):
     df_c = df_b.reset_index().copy()
     df_c.drop(["index"], axis=1, inplace=True)
     # 将df_c保存为Excel文件
-    df_c.to_excel(p_save_path, "目录")
+    if p_outfile:
+        df_c.to_excel(p_save_path, "目录")
+    return df_c
 
 
 # 创建PDFProcessor对象
