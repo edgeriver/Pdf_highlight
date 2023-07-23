@@ -12,6 +12,14 @@ setup(
     python_requires='>=3.6, <=3.12',
     install_requires=["PyMuPDF==1.22.5", "colorlog==6.7.0", "pandas==2.0.3", "openpyxl==3.1.2"],
     # extras_require={"annot_read": ["PyMuPDF==1.22.5"], },
+    classifiers=[
+        'Development Status :: 3 - Alpha',
+        'License :: OSI Approved :: BSD (3-clause) License',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.9',
+        'Intended Audience :: Developers',        # 预期的受众
+        'Topic :: Software Development :: Libraries :: Python Modules',  # 主题和领域
+    ],
     entry_points={
         'console_scripts': [
             'annot_export = edge_pdf.annot_read:annot_export'

@@ -2,6 +2,10 @@
 
 PDFMiner is a text extraction tool for PDF documents.
 
+## 构建
+    python setup.py sdist bdist_wheel
+    twine upload dist/*
+
 ## 安装命令
 ssh安装
 
