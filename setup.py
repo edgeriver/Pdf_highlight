@@ -14,7 +14,7 @@ setup(
     # extras_require={"annot_read": ["PyMuPDF==1.22.5"], },
     classifiers=[
         'Development Status :: 3 - Alpha',
-        'License :: OSI Approved :: BSD (3-clause) License',
+        'License :: OSI Approved :: BSD License',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.9',
         'Intended Audience :: Developers',        # 预期的受众
